@@ -39,28 +39,29 @@
     $upic_file_ext = strtolower(end($upic_fileext));
 
     $upic_allowed = array('jpg', 'jpeg', 'png');
+    //Remplissage des messages d'erreurs dans un tableau
+    $errors = [];
+    $valid = true;
 
     if (in_array($upic_file_ext, $upic_allowed)) {
       if ($upic_file_error === 0) {
-        if ($upic_filesize < 50000) {
+        if ($upic_filesize < 500000) {
           $upic_file_newname = uniqid('', true) . '.' . $upic_file_ext;
           $upic_file_destination = 'src/img/' . $upic_file_newname;
           move_uploaded_file($upic_filetmpname, $upic_file_destination);
         } else {
           array_push($errors, "Votre photo est trop lourde");
+          $valid = false;
         }
       } else {
         array_push($errors, "Il y a eu une erreur lors de l'envoi de votre photo");
+        $valid = false;
       }
     } else {
       array_push($errors, "Votre photo n'est pas au bon format");
+      $valid = false;
     }
 
-
-
-    //Remplissage des messages d'erreurs dans un tableau
-    $errors = [];
-    $valid = true;
 
     if ($uname == "") {    // Vérifier username
       array_push($errors, "Vous devez saisir un nom d'utilisateur!");
@@ -123,7 +124,6 @@
         if ($result['email'] == $umail) {
           array_push($errors, "Cet email existe déjà");
         }
-        echo $unumero;
       } else {
 
         //si l'utilisateur n'existe pas alors on l'enregistre dans la BD
@@ -142,7 +142,7 @@
         // Exécuter la requête
         if ($stmt->execute()) {
           // Redirection vers la page de connexion
-          header('location: register.php');
+          header('location: login.php');
         }
       }
     }
@@ -209,7 +209,7 @@
             <i class="lni lni-users"></i> S'inscrire
           </button>
         </fieldset>
-        <label>Déjà inscrit ! <a href="index.php">Connexion</a></label>
+        <label>Déjà inscrit ! <a href="login.php">Connexion</a></label>
       </form>
     </div>
   </div>

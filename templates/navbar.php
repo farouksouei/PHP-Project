@@ -1,3 +1,7 @@
+<?php
+
+?>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Navbar</a>
@@ -29,6 +33,18 @@
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
         </li>
       </ul>
+      <div class="d-flex">
+        <?php if (isset($_SESSION['user_session'])) {
+          $sql = "SELECT * FROM users WHERE id = '$_SESSION[user_session]'";
+          $reponse = $con->query($sql);
+          $user = $reponse->fetch(PDO::FETCH_ASSOC);
+          echo '<div class="dropdown">';
+          echo '<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+          echo $user['username'];
+          echo '</button>';
+        }
+        ?>
+      </div>
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>

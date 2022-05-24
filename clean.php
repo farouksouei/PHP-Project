@@ -11,6 +11,7 @@
   <title>Registration</title>
 </head>
 
+
 <body>
   <?php include_once 'templates/navbar.php' ?>
 </body>

@@ -1,3 +1,4 @@
+<?php include 'config/db.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +14,11 @@
 
 <body>
   <?php include_once 'templates/navbar.php' ?>
+  <?php include 'config/utilities.php';
+  echo 'test';
+  echo $_SESSION["user_session"]; ?>
+  <?php var_dump($_SESSION); ?>
+
 </body>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.min.js"></script>
