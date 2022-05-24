@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -22,12 +22,40 @@
   if (!empty($_POST)) {
     //récupération des informations du formulaire
     // la fonctio  trim() permet de supprimer les espaces avant et après un texte
-    $uname = trim($_POST['username']);
-    $umail = trim($_POST['email']);
-    $upass = trim($_POST['password']);
-    $unumero = trim($_POST['numero']);
+    $uname = test_input($_POST['username']);
+    $umail = test_input($_POST['email']);
+    $upass = test_input($_POST['password']);
+    $unumero = test_input($_POST['numero']);
     $uaddress = test_input($_POST['address']);
-    $upic = "test";
+    $upic = $_FILES['file'];
+
+    $upic_filename = $_FILES['file']['name'];
+    $upic_filetmpname = $_FILES['file']['tmp_name'];
+    $upic_filesize = $_FILES['file']['size'];
+    $upic_file_error = $_FILES['file']['error'];
+    $upic_filetype = $_FILES['file']['type'];
+
+    $upic_fileext = explode('.', $upic_filename);
+    $upic_file_ext = strtolower(end($upic_fileext));
+
+    $upic_allowed = array('jpg', 'jpeg', 'png');
+
+    if (in_array($upic_file_ext, $upic_allowed)) {
+      if ($upic_file_error === 0) {
+        if ($upic_filesize < 50000) {
+          $upic_file_newname = uniqid('', true) . '.' . $upic_file_ext;
+          $upic_file_destination = 'src/img/' . $upic_file_newname;
+          move_uploaded_file($upic_filetmpname, $upic_file_destination);
+        } else {
+          array_push($errors, "Votre photo est trop lourde");
+        }
+      } else {
+        array_push($errors, "Il y a eu une erreur lors de l'envoi de votre photo");
+      }
+    } else {
+      array_push($errors, "Votre photo n'est pas au bon format");
+    }
+
 
 
     //Remplissage des messages d'erreurs dans un tableau
@@ -52,6 +80,22 @@
       $valid = false;
     } else if (strlen($upass) < 6) {
       array_push($errors, "Le mot de passe doit avoir au moins 6 caractères");
+      $valid = false;
+    }
+    if ($unumero == "") {    // Vérifier numero
+      array_push($errors, "Vous devez saisir un numero");
+      $valid = false;
+    } else if (strlen($unumero) < 8) {
+      array_push($errors, "Le numero doit avoir au moins 8 caractères");
+      $valid = false;
+    } else if (!is_numeric($unumero)) {
+      array_push($errors, "Le numero doit etre un numero !!");
+      $valid = false;
+    }
+    echo $unumero;
+
+    if ($uaddress == "") {    // Vérifier address
+      array_push($errors, "Vous devez saisir une adresse");
       $valid = false;
     }
 
@@ -79,18 +123,26 @@
         if ($result['email'] == $umail) {
           array_push($errors, "Cet email existe déjà");
         }
+        echo $unumero;
       } else {
+
         //si l'utilisateur n'existe pas alors on l'enregistre dans la BD
         // On prépare la requête
-        $sql = "INSERT INTO users (username, email, password)
-                            VALUES ('$uname', '$umail', '$upass')";
-        // Envoi et exécution de la requête
-        $res = $con->exec($sql);
-        // Si l'insertion est effectuée avec succès
-        // On redérige l'utilisateur vers la page de login (connexion)
-
-        if ($res) {
-          header('Location:index.php');
+        $sql = "INSERT INTO users (username, email, password, numero, location, photo_de_profil)
+                            VALUES (:username, :email, :password, :numero, :address, :pic)";
+        // Préparer la requête
+        $stmt = $con->prepare($sql);
+        // Lier les paramètres
+        $stmt->bindParam(':username', $uname);
+        $stmt->bindParam(':email', $umail);
+        $stmt->bindParam(':password', $upass);
+        $stmt->bindParam(':numero', $unumero);
+        $stmt->bindParam(':address', $uaddress);
+        $stmt->bindParam(':pic', $upic_file_newname);
+        // Exécuter la requête
+        if ($stmt->execute()) {
+          // Redirection vers la page de connexion
+          header('location: register.php');
         }
       }
     }
@@ -108,7 +160,7 @@
   ?>
   <div class="signin-form">
     <div class="container">
-      <form id="regiration_form" method="post" class="form-signin" novalidate action="<?= $_SERVER['PHP_SELF'] ?>">
+      <form id="regiration_form" method="post" class="form-signin" novalidate action="<?= $_SERVER['PHP_SELF'] ?>" enctype="multipart/form-data">
         <h2 class="form-signin-heading">Inscription</h2>
         <div class="progress">
           <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
@@ -135,8 +187,8 @@
           <h2 class="form-signin-heading"> Step 2: Add Personnel Details</h2>
           <hr>
           <div class="form-group">
-            <label class="form-signin-heading" for="fName">Upload your profile picture</label>
-            <input type="file" class="form-control" name="data[fName]" id="fName" placeholder="Browse for Picture">
+            <label class="form-signin-heading" for="file">Upload your profile picture</label>
+            <input type="file" class="form-control" name="file" placeholder="Browse for Picture">
           </div>
           <input type="button" name="previous" class="mt-2 previous btn btn-default" value="Previous" />
           <input type="button" name="next" class="mt-2 next btn btn-primary" value="Next" />
