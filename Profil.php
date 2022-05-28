@@ -1,6 +1,8 @@
-<?php include 'config/db.php'; ?>
-<!DOCTYPE html>
-<html lang="en">
+<?php
+include_once 'config/db.php';
+include_once 'config/session.php';
+include_once 'config/utilities.php';
+?>
 
 <head>
   <meta charset="UTF-8">
@@ -9,14 +11,11 @@
   <link rel="stylesheet" href="css/bootstrap.min.css" />
   <link rel="stylesheet" href="icon-font/lineicons.css">
   <link rel="stylesheet" href="style/style.css">
-  <title>Sun Motors</title>
+  <title>Profil de <?php echo $connected_user['username'] ?></title>
 </head>
 
 <body>
   <?php include_once 'templates/navbar.php' ?>
-  <?php include 'config/utilities.php';
-  ?>
-
 </body>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.min.js"></script>

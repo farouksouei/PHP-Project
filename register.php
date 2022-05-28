@@ -93,7 +93,7 @@
       array_push($errors, "Le numero doit etre un numero !!");
       $valid = false;
     }
-    echo $unumero;
+
 
     if ($uaddress == "") {    // Vérifier address
       array_push($errors, "Vous devez saisir une adresse");

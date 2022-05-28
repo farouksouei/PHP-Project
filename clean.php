@@ -11,11 +11,11 @@
   <title>Registration</title>
 </head>
 
-
 <body>
   <?php include_once 'templates/navbar.php' ?>
 </body>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.min.js"></script>
+<script src="https://kit.fontawesome.com/19330062aa.js" crossorigin="anonymous"></script>
 
 </html>
