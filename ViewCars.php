@@ -27,6 +27,7 @@
   ?>
   <div class="album py-5 bg-light">
     <h1 class="text-center">- Tous Les Voiture Disponibles -</h1>
+    <hr>
     <div class="container">
       <!--  -->
 

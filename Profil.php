@@ -66,7 +66,8 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <a href="ViewCar.php?car_id=<?php echo $voiture['id']; ?>" name="View" class="btn btn-sm btn-outline-secondary">View</a>
-                    <a href="" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a href="updateFormCar.php?car_id=<?php echo $voiture['id']; ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a href="deleteCar.php?car_id=<?php echo $voiture['id']; ?>" class="btn btn-sm btn-outline-secondary">Delete</a>
                   </div>
                   <?php
                   $sql_voiture = "SELECT * FROM `users` WHERE id = $voiture[id_user]";
