@@ -18,8 +18,10 @@
   //select all the data from the table a
   $user_id = $connected_user['id'];
   $sql = "SELECT * FROM `annonce_voiture` WHERE `id_user` = '$user_id'";
+  $sql_matriel = "SELECT * FROM `annonce_matriel` WHERE `id_user` = '$user_id'";
   // Envoyer la requête au serveur
   $reponse = $con->query($sql);
+  $reponse_article = $con->query($sql_matriel);
 
   //redirect to the view car page with the id of the car when clicked on view
 
@@ -65,9 +67,9 @@
                 <p class="card-text"><strong>Condition:</strong> <?php echo $voiture['condition_voiture']; ?></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <a href="ViewCar.php?car_id=<?php echo $voiture['id']; ?>" name="View" class="btn btn-sm btn-outline-secondary">View</a>
-                    <a href="updateFormCar.php?car_id=<?php echo $voiture['id']; ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
-                    <a href="deleteCar.php?car_id=<?php echo $voiture['id']; ?>" class="btn btn-sm btn-outline-secondary">Delete</a>
+                    <a href="ViewArticle.php?car_id=<?php echo $voiture['id']; ?>" name="View" class="btn btn-sm btn-outline-secondary">View</a>
+                    <a href="updateFormArticle.php?car_id=<?php echo $voiture['id']; ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a href="deleteArticle.php?car_id=<?php echo $voiture['id']; ?>" class="btn btn-sm btn-outline-secondary">Delete</a>
                   </div>
                   <?php
                   $sql_voiture = "SELECT * FROM `users` WHERE id = $voiture[id_user]";
@@ -85,7 +87,45 @@
     </div>
   </div>
   </div>
+  <div class="album py-5 bg-light">
+    <h1 class="text-center">- Matriel Disponibles -</h1>
+    <div class="container">
+      <!--  -->
 
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+        <?php while ($matriel = $reponse_article->fetch(PDO::FETCH_ASSOC)) : ?>
+          <div class="col">
+            <div class="card shadow-sm">
+              <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="src/img/<?php echo $matriel['photo_matriel']; ?>" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+              <title></title>
+              <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em"> </text>
+              </img>
+
+              <div class="card-body">
+                <p class="card-text"><strong>Modele:</strong> <?php echo $matriel['type']; ?></p>
+                <p class="card-text"><strong>Condition:</strong> <?php echo $matriel['condition_matriel']; ?></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <a href="updateFormCar.php?car_id=<?php echo $voiture['id']; ?>" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a href="deleteCar.php?car_id=<?php echo $voiture['id']; ?>" class="btn btn-sm btn-outline-secondary">Delete</a>
+                  </div>
+                  <?php
+                  $sql_matriel = "SELECT * FROM `users` WHERE id = $matriel[id_user]";
+                  $reponse_matriel = $con->query($sql_matriel);
+                  $user = $reponse_matriel->fetch(PDO::FETCH_ASSOC);
+                  ?>
+                  <p class="card-text"><strong>Vendeur:</strong> <?php echo $user['username']; ?></p>
+                  <small class="text-muted"><?php echo $matriel['price']; ?> DT</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        <?php endwhile; ?>
+      </div>
+    </div>
+  </div>
+  </div>
 
 
 </body>
