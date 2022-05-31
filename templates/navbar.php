@@ -33,10 +33,6 @@ require 'config/session.php';
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li> -->
-
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
         <?php if (isset($_SESSION['user_session'])) {
           $sql = "SELECT * FROM users WHERE id = '$_SESSION[user_session]'";
           $reponse = $con->query($sql);

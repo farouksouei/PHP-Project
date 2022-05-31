@@ -15,34 +15,38 @@
   <?php include 'config/db.php'; ?>
   <?php include_once 'templates/navbar.php' ?>
   <?php include 'config/utilities.php';
-  //select all the data from the table
-  $sql = "SELECT * FROM `annonce_voiture` LIMIT 6";
+  //select all the data from the table a
+  $sql = "SELECT * FROM `annonce_voiture` ORDER BY id DESC LIMIT 6";
+  $sql_article = "SELECT * FROM `annonce_matriel` ORDER BY id DESC LIMIT 6";
   // Envoyer la requête au serveur
   $reponse = $con->query($sql);
-  //<?php while ($voiture = $reponse->fetch(PDO::FETCH_ASSOC)) : 
+  $reponse_article = $con->query($sql_article);
+
   //redirect to the view car page with the id of the car when clicked on view
 
-  //<a href="viewcar.php?id=<?php echo $voiture['id']; 
+
 
   ?>
   <section class="py-5 text-center container">
     <div class="row py-lg-5">
       <div class="col-lg-6 col-md-8 mx-auto">
-        <h1 class="fw-light">Album example</h1>
-        <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+        <h1 class="fw-light">Sun Motors</h1>
+        <p class="lead text-muted">Site des annonces de vente et achat des voitures occasion et neuves en Tunisie. Site spécialisé dans les annonces des voitures d’occasion avec obligation des prix. Le site contient aussi des annonces des voitures neuves.</p>
         <p>
-          <a href="#" class="btn btn-primary my-2">Main call to action</a>
-          <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+          <a href="ViewCars.php" class="btn btn-secondary my-2">View All Cars</a>
+          <a href="ViewArticles.php" class="btn btn-secondary my-2">View All Car Parts</a>
         </p>
       </div>
     </div>
   </section>
 
   <div class="album py-5 bg-light">
+    <h1 class="text-center">- Voiture Disponibles -</h1>
     <div class="container">
       <!--  -->
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
         <?php while ($voiture = $reponse->fetch(PDO::FETCH_ASSOC)) : ?>
           <div class="col">
             <div class="card shadow-sm">
@@ -71,6 +75,50 @@
             </div>
           </div>
         <?php endwhile; ?>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="album py-5 bg-light">
+    <h1 class="text-center">- Matriel Disponibles -</h1>
+    <div class="container">
+      <!--  -->
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+        <?php while ($matriel = $reponse_article->fetch(PDO::FETCH_ASSOC)) : ?>
+          <div class="col">
+            <div class="card shadow-sm">
+              <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="src/img/<?php echo $matriel['photo_matriel']; ?>" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+              <title></title>
+              <rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em"> </text>
+              </img>
+
+              <div class="card-body">
+                <p class="card-text"><strong>Modele:</strong> <?php echo $matriel['type']; ?></p>
+                <p class="card-text"><strong>Condition:</strong> <?php echo $matriel['condition_matriel']; ?></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <a href="ViewArticle.php?matriel_id=<?php echo $matriel['id']; ?>" name="View" class="btn btn-sm btn-outline-secondary">View</a>
+                    <a href="" class="btn btn-sm btn-outline-secondary">Edit</a>
+                  </div>
+                  <?php
+                  $sql_matriel = "SELECT * FROM `users` WHERE id = $matriel[id_user]";
+                  $reponse_matriel = $con->query($sql_matriel);
+                  $user = $reponse_matriel->fetch(PDO::FETCH_ASSOC);
+                  ?>
+                  <p class="card-text"><strong>Vendeur:</strong> <?php echo $user['username']; ?></p>
+                  <small class="text-muted"><?php echo $matriel['price']; ?> DT</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        <?php endwhile; ?>
+      </div>
+    </div>
+  </div>
+  </div>
 
 
 
