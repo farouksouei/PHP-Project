@@ -15,12 +15,12 @@ require 'config/session.php';
           <a class="nav-link" aria-current="page" href="index.php">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Tout Les Voitures</a>
+          <a class="nav-link" href="ViewCars.php">Tout Les Voitures</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Tout Les Articles</a>
+          <a class="nav-link" href="ViewArticles.php">Tout Les Articles</a>
         </li>
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
           </a>
@@ -32,7 +32,7 @@ require 'config/session.php';
             </li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
-        </li>
+        </li> -->
 
         <li class="nav-item">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>

@@ -1,3 +1,6 @@
+<?php include_once 'config/utilities.php'; ?>
+<?php include_once 'config/db.php'; ?>
+<?php include_once 'config/session.php' ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +15,7 @@
 </head>
 
 <body>
-  <?php include_once 'templates/navbar.php' ?>
+  <?php include_once 'templates/navbar.php'; ?>
 </body>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/jquery.min.js"></script>

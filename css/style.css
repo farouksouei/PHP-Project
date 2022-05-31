@@ -21,15 +21,15 @@
 }
 
 .form-signin {
-  border-color: #0d6efd !important;
+  border-color: black ;
 }
 
 .form-signin hr {
-  color: #0d6efd !important;
+  color: black ;
 }
 
 .form-signin .form-signin-heading {
-  color: #0d6efd;
+  color: black;
   text-align: center;
 }
 .form-signin input[type="text"],
