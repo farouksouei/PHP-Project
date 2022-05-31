@@ -20,7 +20,9 @@
   // Envoyer la requête au serveur
   $reponse = $con->query($sql);
   //<?php while ($voiture = $reponse->fetch(PDO::FETCH_ASSOC)) : 
-  // 
+  //redirect to the view car page with the id of the car when clicked on view
+
+  //<a href="viewcar.php?id=<?php echo $voiture['id']; 
 
   ?>
   <section class="py-5 text-center container">
@@ -54,8 +56,8 @@
                 <p class="card-text"><strong>Condition:</strong> <?php echo $voiture['condition_voiture']; ?></p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    <a href="ViewCar.php?car_id=<?php echo $voiture['id']; ?>" name="View" class="btn btn-sm btn-outline-secondary">View</a>
+                    <a href="" class="btn btn-sm btn-outline-secondary">Edit</a>
                   </div>
                   <?php
                   $sql_voiture = "SELECT * FROM `users` WHERE id = $voiture[id_user]";
